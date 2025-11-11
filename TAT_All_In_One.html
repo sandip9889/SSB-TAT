@@ -496,21 +496,21 @@
 
         // Export all stories
         function exportAllStories() {
-            let content = 'SSB TAT PREPARATION - ALL STORIES\\n';
-            content += 'SSB Jalandhar | 9th December 2024\\n';
-            content += '='.repeat(60) + '\\n\\n';
+            let content = 'SSB TAT PREPARATION - ALL STORIES\n';
+            content += 'SSB Jalandhar | 9th December 2024\n';
+            content += '='.repeat(60) + '\n\n';
 
             for (let i = 1; i <= 74; i++) {
                 const saved = localStorage.getItem(`tat_picture_${i}`);
                 if (saved) {
                     const data = JSON.parse(saved);
                     if (data.theme || data.story1 || data.story2) {
-                        content += `PICTURE ${i}\\n`;
-                        content += '-'.repeat(60) + '\\n';
-                        content += `THEME: ${data.theme || 'Not written yet'}\\n\\n`;
-                        content += `STORY 1:\\n${data.story1 || 'Not written yet'}\\n\\n`;
-                        content += `STORY 2:\\n${data.story2 || 'Not written yet'}\\n\\n`;
-                        content += '='.repeat(60) + '\\n\\n';
+                        content += `PICTURE ${i}\n`;
+                        content += '-'.repeat(60) + '\n';
+                        content += `THEME: ${data.theme || 'Not written yet'}\n\n`;
+                        content += `STORY 1:\n${data.story1 || 'Not written yet'}\n\n`;
+                        content += `STORY 2:\n${data.story2 || 'Not written yet'}\n\n`;
+                        content += '='.repeat(60) + '\n\n';
                     }
                 }
             }
