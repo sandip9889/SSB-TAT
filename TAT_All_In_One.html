@@ -407,7 +407,9 @@
 
         // Generate practice cards for all 74 pictures
         function generatePracticeCards() {
+            console.log('generatePracticeCards called');
             const container = document.getElementById('picturesContainer');
+            console.log('Container element:', container);
             let html = '';
 
             for (let i = 1; i <= 74; i++) {
@@ -1530,10 +1532,19 @@
 
         // Initialize on page load
         window.onload = function() {
-            generatePracticeCards();
-            loadStoriesGuide();
-            loadQuickGuide();
-            loadStudyGuide();
+            console.log('Page loaded, initializing...');
+            try {
+                generatePracticeCards();
+                console.log('Practice cards generated');
+                loadStoriesGuide();
+                console.log('Stories guide loaded');
+                loadQuickGuide();
+                console.log('Quick guide loaded');
+                loadStudyGuide();
+                console.log('Study guide loaded');
+            } catch (error) {
+                console.error('Error during initialization:', error);
+            }
         };
     </script>
 </body>
