@@ -1,0 +1,35 @@
+# Python files
+*.py
+__pycache__/
+*.pyc
+
+# Poppler installation
+poppler/
+
+# Original PDF files (too large for GitHub)
+*.pdf
+
+# Temporary files
+*.tmp
+*.bak
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Old versions (not needed for GitHub Pages)
+TAT_Complete_Preparation_Tool.html
+TAT_Pictures_With_Stories.html
+extract_pdf.py
+extract_tat_images.py
+install_poppler.ps1
+SSB_TAT_Preparation.md
+
+# Keep only essential files for the web app
+# START_HERE.html
+# TAT_All_In_One.html
+# tat_images/
+# *.md files
+# HOW_TO_USE.txt
+

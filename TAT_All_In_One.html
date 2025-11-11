@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSB TAT Complete Preparation Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: white;
+            padding: 20px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .header h1 {
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 2em;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1em;
+        }
+        
+        .tab-container {
+            background: white;
+            margin: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 3px solid #667eea;
+            overflow-x: auto;
+        }
+        
+        .tab {
+            padding: 15px 30px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            font-size: 1em;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -3px;
+        }
+        
+        .tab:hover {
+            background: #e9ecef;
+            color: #333;
+        }
+        
+        .tab.active {
+            color: #667eea;
+            background: white;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 30px;
+            max-height: calc(100vh - 250px);
+            overflow-y: auto;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Practice Tab Styles */
+        .tat-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 2px solid #dee2e6;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .card-number {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .save-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s ease;
+        }
+        
+        .save-btn:hover {
+            background: #218838;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        
+        .image-container {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            border: 2px solid #dee2e6;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-group label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #dee2e6;
+            border-radius: 5px;
+            font-size: 1em;
+            font-family: inherit;
+        }
+        
+        .input-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .input-group input:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        /* Guide Styles */
+        .guide-content {
+            line-height: 1.8;
+            color: #333;
+        }
+        
+        .guide-content h2 {
+            color: #667eea;
+            margin: 25px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .guide-content h3 {
+            color: #764ba2;
+            margin: 20px 0 10px 0;
+        }
+        
+        .guide-content h4 {
+            color: #555;
+            margin: 15px 0 8px 0;
+        }
+        
+        .guide-content ul, .guide-content ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .guide-content li {
+            margin: 8px 0;
+        }
+        
+        .guide-content p {
+            margin-bottom: 12px;
+        }
+        
+        .guide-content strong {
+            color: #667eea;
+        }
+        
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .danger-box {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .info-box {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .story-example {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        
+        .story-example h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        table th,
+        table td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        
+        table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .export-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            box-shadow: 0 5px 20px rgba(220, 53, 69, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .export-btn:hover {
+            background: #c82333;
+            transform: scale(1.05);
+        }
+        
+        .success-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 2000;
+        }
+        
+        @media (max-width: 968px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tab {
+                flex: 1 1 auto;
+                min-width: 120px;
+            }
+        }
+        
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+        
+        hr {
+            border: none;
+            border-top: 2px solid #dee2e6;
+            margin: 25px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎖️ SSB TAT Complete Preparation Tool</h1>
+        <p><strong>SSB Jalandhar | 9th December 2024 | TAT - Day 2</strong></p>
+    </div>
+
+    <div class="tab-container">
+        <div class="tabs">
+            <button class="tab active" onclick="openTab(event, 'practice')">📝 Practice (74 Pictures)</button>
+            <button class="tab" onclick="openTab(event, 'stories')">📚 Complete Stories Guide</button>
+            <button class="tab" onclick="openTab(event, 'quick')">⚡ Quick Reference</button>
+            <button class="tab" onclick="openTab(event, 'study')">📖 Study Plan</button>
+        </div>
+
+        <!-- Practice Tab -->
+        <div id="practice" class="tab-content active">
+            <div id="picturesContainer"></div>
+        </div>
+
+        <!-- Complete Stories Guide Tab -->
+        <div id="stories" class="tab-content">
+            <div class="guide-content" id="storiesGuide"></div>
+        </div>
+
+        <!-- Quick Reference Tab -->
+        <div id="quick" class="tab-content">
+            <div class="guide-content" id="quickGuide"></div>
+        </div>
+
+        <!-- Study Plan Tab -->
+        <div id="study" class="tab-content">
+            <div class="guide-content" id="studyGuide"></div>
+        </div>
+    </div>
+
+    <button class="export-btn" onclick="exportAllStories()">📥 Export All Stories</button>
+    <div class="success-message" id="successMessage">✓ Saved successfully!</div>
+
+    <script>
+        // Tab switching function
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+
+            const tabs = document.getElementsByClassName('tab');
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        // Generate practice cards for all 74 pictures
+        function generatePracticeCards() {
+            const container = document.getElementById('picturesContainer');
+            let html = '';
+
+            for (let i = 1; i <= 74; i++) {
+                const picNum = i.toString().padStart(2, '0');
+                html += `
+                    <div class="tat-card">
+                        <div class="card-header">
+                            <div class="card-number">Picture ${i}</div>
+                            <button class="save-btn" onclick="saveData(${i})">💾 Save</button>
+                        </div>
+                        <div class="content-grid">
+                            <div class="image-section">
+                                <div class="image-container">
+                                    <img src="tat_images/tat_picture_${picNum}.png" alt="TAT Picture ${i}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22><rect fill=%22%23f0f0f0%22 width=%22400%22 height=%22300%22/><text x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23999%22>Picture ${i}</text></svg>'">
+                                </div>
+                            </div>
+                            <div class="story-section">
+                                <div class="input-group">
+                                    <label>🎯 Theme:</label>
+                                    <input type="text" id="theme_${i}" placeholder="e.g., Leadership, Courage, Helping Others...">
+                                </div>
+                                <div class="input-group">
+                                    <label>📖 Story 1:</label>
+                                    <textarea id="story1_${i}" placeholder="Write your first story here (Past → Present → Future)..."></textarea>
+                                </div>
+                                <div class="input-group">
+                                    <label>📖 Story 2:</label>
+                                    <textarea id="story2_${i}" placeholder="Write your second story here (Past → Present → Future)..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+            loadAllData();
+        }
+
+        // Save data for a specific picture
+        function saveData(pictureNum) {
+            const theme = document.getElementById(`theme_${pictureNum}`).value;
+            const story1 = document.getElementById(`story1_${pictureNum}`).value;
+            const story2 = document.getElementById(`story2_${pictureNum}`).value;
+
+            const data = { theme, story1, story2 };
+            localStorage.setItem(`tat_picture_${pictureNum}`, JSON.stringify(data));
+
+            showSuccessMessage();
+        }
+
+        // Load all saved data
+        function loadAllData() {
+            for (let i = 1; i <= 74; i++) {
+                const saved = localStorage.getItem(`tat_picture_${i}`);
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    const themeEl = document.getElementById(`theme_${i}`);
+                    const story1El = document.getElementById(`story1_${i}`);
+                    const story2El = document.getElementById(`story2_${i}`);
+
+                    if (themeEl) themeEl.value = data.theme || '';
+                    if (story1El) story1El.value = data.story1 || '';
+                    if (story2El) story2El.value = data.story2 || '';
+                }
+            }
+        }
+
+        // Auto-save every 30 seconds
+        setInterval(() => {
+            for (let i = 1; i <= 74; i++) {
+                const themeEl = document.getElementById(`theme_${i}`);
+                const story1El = document.getElementById(`story1_${i}`);
+                const story2El = document.getElementById(`story2_${i}`);
+
+                if (themeEl && (themeEl.value || story1El.value || story2El.value)) {
+                    saveData(i);
+                }
+            }
+        }, 30000);
+
+        // Export all stories
+        function exportAllStories() {
+            let content = 'SSB TAT PREPARATION - ALL STORIES\\n';
+            content += 'SSB Jalandhar | 9th December 2024\\n';
+            content += '='.repeat(60) + '\\n\\n';
+
+            for (let i = 1; i <= 74; i++) {
+                const saved = localStorage.getItem(`tat_picture_${i}`);
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    if (data.theme || data.story1 || data.story2) {
+                        content += `PICTURE ${i}\\n`;
+                        content += '-'.repeat(60) + '\\n';
+                        content += `THEME: ${data.theme || 'Not written yet'}\\n\\n`;
+                        content += `STORY 1:\\n${data.story1 || 'Not written yet'}\\n\\n`;
+                        content += `STORY 2:\\n${data.story2 || 'Not written yet'}\\n\\n`;
+                        content += '='.repeat(60) + '\\n\\n';
+                    }
+                }
+            }
+
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'TAT_All_Stories.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Show success message
+        function showSuccessMessage() {
+            const msg = document.getElementById('successMessage');
+            msg.style.display = 'block';
+            setTimeout(() => {
+                msg.style.display = 'none';
+            }, 2000);
+        }
+
+        // Load Stories Guide
+        async function loadStoriesGuide() {
+            const content = document.getElementById('storiesGuide');
+            content.innerHTML = `<h1>SSB TAT Complete Stories Guide - AI Analyzed</h1>
+<br>
+<p><strong>Candidate:</strong> Preparing for SSB Jalandhar  </p>
+<p><strong>Interview Date:</strong> 9th December 2024  </p>
+<p><strong>Test:</strong> TAT (Thematic Apperception Test) - Day 2</p>
+<br>
+<hr>
+<br>
+<h2>How to Use This Guide</h2>
+<br>
+<p>Since I cannot directly view images, I've created comprehensive stories for the most common TAT picture types. When you see a picture:</p>
+<br>
+<p>1. <strong>Identify the scenario</strong> (study, sports, helping, emergency, etc.)</p>
+<p>2. <strong>Find similar story below</strong></p>
+<p>3. <strong>Adapt it to match the exact picture</strong></p>
+<p>4. <strong>Practice writing it in 4 minutes</strong></p>
+<br>
+<hr>
+<br>
+<h2>Picture Type 1: Student Studying / Academic Scene</h2>
+<br>
+<h3>THEME: Academic Determination, Self-Improvement</h3>
+<br>
+<h3>STORY 1:</h3>
+<p>Arjun, a 23-year-old engineering student, was struggling with his final semester project on renewable energy. His initial design failed during testing, disappointing his team. Instead of giving up, Arjun analyzed the failure points, consulted his professor, and spent extra hours in the library researching alternative solutions. He motivated his team members, redistributed tasks based on everyone's strengths, and worked late nights perfecting the design. After three weeks of dedicated effort, their improved project won the best innovation award. Arjun's determination and leadership transformed failure into success, earning respect from peers and faculty.</p>
+<br>
+<h3>STORY 2:</h3>
+<p>Vikram noticed his younger sister was failing in mathematics and losing confidence. He decided to help her systematically. Every evening after his own studies, Vikram spent two hours teaching her using simple examples and practical applications. He created a study schedule, made learning fun with games, and regularly tested her progress. He also motivated her by sharing his own academic struggles and how he overcame them. Within four months, his sister's grades improved from 45% to 78%. Vikram felt proud that his patience and dedication helped build his sister's confidence and academic performance.</p>
+<br>
+<hr>
+<br>
+<h2>Picture Type 2: Rope Climbing / Physical Training</h2>
+<br>
+<h3>THEME: Physical Courage, Overcoming Fear</h3>
+<br>
+<h3>STORY 1:</h3>
+<p>Lieutenant Rahul was training NDA cadets when he noticed Cadet Amar struggling with rope climbing due to fear of heights. While others mocked him, Rahul took personal interest. He started training Amar separately, teaching him breathing techniques and building his confidence gradually. Rahul demonstrated the technique himself, motivated Amar with positive reinforcement, and ensured safety measures. He made Amar practice daily, starting from lower heights. After six weeks of dedicated training, Amar not only conquered his fear but also completed the rope climbing in record time. Rahul's patient mentorship transformed a fearful cadet into a confident one.</p>
+<br>
+<h3>STORY 2:</h3>
+<p>During an adventure camp, Rohan had to cross a gorge using a rope bridge. He was terrified of heights but didn't want to let his team down. Taking deep breaths, Rohan remembered his training and focused on the goal. He took the first step carefully, maintained his balance, and encouraged himself mentally. Halfway through, he felt dizzy but didn't panic. He paused, regained composure, and continued steadily. Successfully crossing the bridge, Rohan then helped other hesitant team members by guiding them verbally and demonstrating confidence. His courage inspired three others to overcome their fears and complete the challenge.</p>
+<br>
+<hr>
+<br>
+<h2>Picture Type 3: Group Discussion / Team Meeting</h2>
+<br>
+<h3>THEME: Leadership, Team Coordination</h3>
+<br>
+<h3>STORY 1:</h3>
+<p>Captain Priya was leading a disaster relief team when conflicts arose about resource allocation between medical aid and food distribution. Team members had strong opposing views, causing delays. Priya called an emergency meeting, listened to everyone's concerns without bias, and analyzed the situation objectively. She created a priority matrix based on urgency and impact, allocated resources proportionally, and assigned clear responsibilities to each team member. She also established a communication protocol for quick decisions. Her balanced leadership and problem-solving skills ensured both medical and food relief reached affected people efficiently, saving many lives.</p>
+<br>
+<h3>STORY 2:</h3>
+<p>Aditya's college project team was facing a deadline crisis with incomplete work and demotivated members. As team leader, Aditya organized a meeting to assess the situation. He identified that poor task distribution was the main issue. Aditya redistributed work based on each member's strengths, took the most challenging coding part himself, and set daily milestones. He motivated the team by highlighting their past successes and maintained positive energy. He also arranged for extended lab access and coordinated with professors for guidance. Through his effective leadership and team management, they completed the project two days before deadline with excellent quality.</p>
+<br>
+<hr>
+<br>
+<h2>Picture Type 4: Helping Elderly / Social Service</h2>
+<br>
+<h3>THEME: Social Responsibility, Compassion</h3>
+<br>
+<h3>STORY 1:</h3>
+<p>Karan was rushing to an important interview when he saw an elderly man collapse on the road. While others watched, Karan immediately stopped, checked the person's pulse, and called an ambulance. He provided first aid, kept the person comfortable, and informed the family using the man's phone. Despite missing his interview, Karan stayed until the family arrived at the hospital. He even donated blood when needed. The family was grateful, and Karan felt satisfied that saving a life was more important than any interview. His humanity and quick thinking made a real difference.</p>
+<br>
+<h3>STORY 2:</h3>
+<p>Neha noticed that elderly people in her neighborhood struggled with daily tasks like grocery shopping and medical appointments. She organized a volunteer group of college students and created a weekend service program. They helped senior citizens with shopping, accompanied them to hospitals, taught them basic smartphone usage, and spent time listening to their stories. Neha coordinated schedules, maintained a helpline number, and ensured regular visits. Within six months, 50 elderly people benefited from this service. Neha's initiative brought joy to lonely lives and strengthened community bonds, earning appreciation from local authorities.</p>
+<br>
+<hr>
+<br>
+<h2>Picture Type 5: Sports / Athletic Competition</h2>
+<br>
+<h3>THEME: Sportsmanship, Competitive Spirit</h3>
+<br>
+<h3>STORY 1:</h3>
+<p>Captain Rajat was leading his college football team in the state finals. At halftime, they were losing 2-0, and team morale was low. Instead of blaming anyone, Rajat gathered the team, analyzed the opponent's strategy, and identified weaknesses. He motivated each player, reminded them of their training, and made tactical changes. Rajat led from the front, scored two goals through determined play, and inspired his teammates. The team fought back brilliantly and won 3-2. Rajat's leadership, tactical thinking, and never-give-up attitude turned defeat into victory, making everyone proud.</p>
+<br>
+<h3>STORY 2:</h3>
+<p>Simran was preparing for the national athletics championship in 400m race. Three weeks before the event, she injured her ankle during practice. Doctors advised rest, but Simran was determined. She consulted a sports physiotherapist, followed a strict recovery and rehabilitation program, and modified her training to avoid strain. She maintained her fitness through swimming and upper body exercises. Her dedication and positive attitude helped her recover faster than expected. At the championship, despite not being 100% fit, Simran's determination helped her win a silver medal, proving that mental strength is as important as physical fitness.</p>
+<br>
+<hr>
+<br>
+<h2>Picture Type 6: Family Conflict / Decision Making</h2>
+<br>
+<h3>THEME: Maturity, Conflict Resolution</h3>
+<br>
+<h3>STORY 1:</h3>
+<p>Aditya's parents had different opinions about his career. His father wanted him to join the family business while his mother supported his dream of joining the Indian Army. The conflict was creating family tension. Aditya handled the situation maturely. He sat with both parents separately, understood their concerns, and then organized a family discussion. He respectfully explained his passion for serving the nation, presented his preparation plan, and assured them of his commitment. He also suggested that his younger brother could manage the business. His clear communication, respect for elders, and logical approach convinced his parents to support his decision.</p>
+<br>
+<h3>STORY 2:</h3>
+<p>When Meera's father lost his job, the family faced severe financial crisis. Instead of complaining or losing hope, Meera took responsibility. She started part-time tutoring to support her education expenses, helped her mother with household work, and motivated her father to explore new opportunities. She helped him update his resume, prepare for interviews, and maintain confidence. Meera also reduced unnecessary expenses and managed the household budget efficiently. Her positive attitude and mature handling of the crisis kept the family united. Within three months, her father found a better job, and the family overcame the difficult phase stronger than before.</p>
+<br>
+<hr>
+<br>
+<h2>Picture Type 7: Bridge / River Crossing / Obstacle</h2>
+<br>
+<h3>THEME: Problem-Solving, Courage</h3>
+<br>
+<h3>STORY 1:</h3>
+<p>During a trekking expedition in the Himalayas, Lieutenant Suresh and his team reached a broken bridge over a fast-flowing river. The alternative route would take two extra days, and they had limited supplies. While others panicked, Suresh assessed the situation calmly. He identified strong wooden planks nearby, used ropes from their equipment, and designed a temporary safe passage. He tested it himself first, then guided each team member across with safety instructions. His engineering knowledge, quick thinking, and courage ensured everyone crossed safely. The team completed their mission on time, thanks to Suresh's problem-solving skills and leadership.</p>
+<br>
+<h3>STORY 2:</h3>
+<p>Kavita was leading a village development project when floods destroyed the only bridge connecting the village to the town. This cut off access to medical facilities and markets. Kavita immediately took charge. She organized villagers to create a temporary boat service for emergencies, contacted district authorities for bridge reconstruction, and arranged alternative supply routes. She also initiated a fundraising campaign and coordinated with NGOs for support. Her quick response ensured minimal disruption to village life. Within a week, temporary arrangements were functional, and bridge reconstruction began. Kavita's leadership and crisis management skills earned her recognition from the government.</p>
+<br>
+<hr>
+<br>
+<h2>Picture Type 8: Farming / Rural Scene</h2>
+<br>
+<h3>THEME: Innovation, Rural Development</h3>
+<br>
+<h3>STORY 1:</h3>
+<p>Ramesh, a young farmer with engineering background, noticed that traditional farming methods in his village gave poor yields despite hard work. He attended agricultural training programs, learned about modern techniques like drip irrigation, organic farming, and crop rotation. Ramesh implemented these on his land first, documenting results carefully. His crop yield increased by 50% with less water usage. Seeing his success, he organized training sessions for fellow farmers, helped them access government schemes, and formed a cooperative for better market prices. His innovative approach and knowledge-sharing transformed his village's agriculture, improving everyone's income.</p>
+<br>
+<h3>STORY 2:</h3>
+<p>During a severe drought, Mohan's village faced complete crop failure and farmers were migrating to cities. Mohan researched drought-resistant crops and water conservation methods. He convinced the village council to try new techniques, helped implement rainwater harvesting, and introduced crops like millets that need less water. He also arranged for government support and expert guidance. Initially skeptical, farmers agreed to try on small plots. The results were encouraging. Mohan's persistence and innovative thinking saved the village's agriculture. He became a role model, and neighboring villages adopted his methods. His leadership brought hope and prosperity to the region.</p>
+<br>
+<hr>
+<br>
+<h2>Picture Type 9: Accident / Emergency Scene</h2>
+<br>
+<h3>THEME: Presence of Mind, Emergency Response</h3>
+<br>
+<h3>STORY 1:</h3>
+<p>Abhishek was driving home when he witnessed a serious road accident involving a motorcycle and a car. While a crowd gathered to watch, Abhishek immediately took action. He called emergency services (108 ambulance and police), moved his vehicle to create space, and switched on hazard lights to alert other vehicles. He provided first aid to the injured motorcyclist, stopped the bleeding using his handkerchief, and kept him conscious by talking. He managed the crowd, prevented them from moving the injured person incorrectly, and collected witness information. His prompt action and presence of mind saved the victim's life. Police commended his responsible citizenship.</p>
+<br>
+<h3>STORY 2:</h3>
+<p>Pooja was traveling by train when she noticed smoke coming from a compartment. Realizing the danger, she immediately pulled the emergency chain, alerted the train staff, and started evacuating passengers calmly without creating panic. She helped elderly passengers and children exit first, ensured everyone moved to safe compartments, and guided people away from the smoke. She also helped the train staff locate fire extinguishers and informed them about the exact location of the fire. Her quick thinking and organized response prevented a major tragedy. Railway authorities appreciated her courage and presence of mind, and she received a bravery award.</p>
+<br>
+<hr>
+<br>
+<h2>Picture Type 10: Laboratory / Research / Innovation</h2>
+<br>
+<h3>THEME: Scientific Temperament, Perseverance</h3>
+<br>
+<h3>STORY 1:</h3>
+<p>Dr. Sanjay, a research scholar, was developing a low-cost water purification system for rural areas. After eight months of work, his prototype failed during final testing. His guide suggested abandoning the project, but Sanjay refused to give up. He analyzed every failure point, studied international research papers, and consulted experts from IIT. He modified his approach, used locally available materials, and tested rigorously. After four more months of dedicated effort, he successfully created an affordable purification system costing only ₹500. His invention was adopted by several NGOs, providing clean water to 10,000 families. Sanjay's perseverance and innovation made a real social impact.</p>
+<br>
+<h3>STORY 2:</h3>
+<p>Ananya was part of a medical research team developing a diagnostic device for rural health centers. The project faced multiple technical challenges and funding issues. While others were demotivated, Ananya took initiative. She reorganized the team, identified critical tasks, and worked extra hours in the lab. She also prepared a detailed proposal and secured additional funding from a corporate CSR program. Her dedication and problem-solving skills helped overcome obstacles. The device was successfully developed and deployed in 50 rural health centers, improving diagnosis accuracy. Ananya's leadership and commitment to healthcare innovation earned her a national award.</p>
+<br>
+<hr>
+<br>
+<h2>Additional Common TAT Scenarios</h2>
+<br>
+<h3>Scenario: Dacoity / Theft / Crime Prevention</h3>
+<br>
+<p><strong>THEME:</strong> Courage, Law Enforcement Support</p>
+<br>
+<p><strong>STORY:</strong></p>
+<p>Arjun was returning home late when he noticed suspicious activity near a jewelry shop. Three men were trying to break in. Instead of ignoring it, Arjun immediately called the police (100), noted the vehicle number, and alerted nearby shopkeepers. He maintained a safe distance but kept observing to provide accurate information to police. When police arrived within 5 minutes, Arjun's detailed description helped them catch the criminals red-handed. His alert citizenship and courage prevented a major theft. Police commended his responsible action and awareness.</p>
+<br>
+<hr>
+<br>
+<h3>Scenario: Child Labor / Social Issue</h3>
+<br>
+<p><strong>THEME:</strong> Social Justice, Child Welfare</p>
+<br>
+<p><strong>STORY:</strong></p>
+<p>Neha noticed that a 10-year-old boy was working at a roadside eatery instead of going to school. She talked to the boy and learned about his family's poverty. Instead of just feeling sad, Neha took action. She contacted an NGO working for child rights, arranged for the boy's admission in a government school, and helped his family access welfare schemes. She also convinced the eatery owner about child labor laws. The boy started attending school, and Neha sponsored his education. Her compassion and proactive approach changed a child's future.</p>
+<br>
+<hr>
+<br>
+<h3>Scenario: Environmental Pollution / Cleanliness</h3>
+<br>
+<p><strong>THEME:</strong> Environmental Awareness, Community Leadership</p>
+<br>
+<p><strong>STORY:</strong></p>
+<p>Vikram noticed that a beautiful lake in his city was becoming polluted due to garbage dumping and industrial waste. He started a "Save Our Lake" campaign on social media, organized cleanliness drives every Sunday, and mobilized 200 volunteers. He also filed complaints with pollution control board, met local authorities, and arranged for proper waste management. He educated nearby residents and industries about environmental responsibility. Within six months, the lake was significantly cleaner, and a permanent monitoring system was established. Vikram's environmental leadership inspired citywide change.</p>
+<br>
+<hr>
+<br>
+<h3>Scenario: Communal Harmony / Religious Conflict</h3>
+<br>
+<p><strong>THEME:</strong> Secularism, Peace-building</p>
+<br>
+<p><strong>STORY:</strong></p>
+<p>During a religious festival, tensions arose in Rahul's neighborhood due to a misunderstanding between two communities. Rumors were spreading, and situation was getting tense. Rahul, respected by both communities, took initiative. He organized a peace meeting with elders from both sides, clarified the misunderstanding, and appealed for calm. He also coordinated with police for preventive measures and used social media to spread correct information. His balanced approach and communication skills prevented potential conflict. Both communities appreciated his efforts, and the festival was celebrated peacefully together.</p>
+<br>
+<hr>
+<br>
+<h3>Scenario: Women Safety / Eve Teasing</h3>
+<br>
+<p><strong>THEME:</strong> Social Responsibility, Protecting Others</p>
+<br>
+<p><strong>STORY:</strong></p>
+<p>Aditya was traveling by bus when he noticed some men harassing a female passenger. While others looked away, Aditya intervened firmly but calmly. He asked the men to behave properly, supported the woman, and informed the bus conductor. When the men became aggressive, Aditya called the police and ensured the culprits were handed over at the next stop. He also gave his statement as a witness. His courage and sense of justice protected a woman's dignity and set an example for other passengers. Police appreciated his responsible citizenship.</p>
+<br>
+<hr>
+<br>
+<h3>Scenario: Drug Abuse / Youth Awareness</h3>
+<br>
+<p><strong>THEME:</strong> Social Awareness, Helping Friends</p>
+<br>
+<p><strong>STORY:</strong></p>
+<p>Rohan discovered that his close friend Amit had started consuming drugs due to peer pressure and depression. Instead of abandoning him, Rohan decided to help. He talked to Amit with empathy, understood his problems, and convinced him to seek professional help. Rohan accompanied Amit to a de-addiction center, supported him throughout the treatment, and helped him rebuild confidence. He also organized awareness sessions in college about drug abuse dangers. Amit successfully overcame addiction and resumed normal life. Rohan's friendship and timely intervention saved a life.</p>
+<br>
+<hr>
+<br>
+<h3>Scenario: Corruption / Ethical Dilemma</h3>
+<br>
+<p><strong>THEME:</strong> Integrity, Moral Courage</p>
+<br>
+<p><strong>STORY:</strong></p>
+<p>Priya was getting her father's land documents processed when the clerk demanded a bribe for faster processing. Her father was willing to pay to avoid delays, but Priya refused to compromise on principles. She filed a complaint with the anti-corruption bureau, provided evidence, and followed up systematically. Despite pressure and delays, she stood firm. The corrupt clerk was suspended, and her work was completed without bribe. Priya's integrity and courage against corruption set an example. Her father felt proud of her principled stand.</p>
+<br>
+<hr>
+<br>
+<h3>Scenario: Disability / Inclusion</h3>
+<br>
+<p><strong>THEME:</strong> Empathy, Social Inclusion</p>
+<br>
+<p><strong>STORY:</strong></p>
+<p>Karan noticed that a physically challenged student in his college faced difficulty accessing upper floors as there was no ramp or lift. While others ignored it, Karan took initiative. He met the principal, prepared a proposal for accessibility improvements, and mobilized student support. He also organized a fundraiser and contacted NGOs for assistance. Within three months, ramps were installed, accessible toilets were built, and special seating arrangements were made. Karan's empathy and leadership made the college inclusive for all students, earning him appreciation from the administration.</p>
+<br>
+<hr>
+<br>
+<h3>Scenario: Unemployment / Skill Development</h3>
+<br>
+<p><strong>THEME:</strong> Initiative, Community Development</p>
+<br>
+<p><strong>STORY:</strong></p>
+<p>Amit noticed that many educated youth in his village were unemployed due to lack of relevant skills. He decided to address this issue. Amit used his IT knowledge to start free computer training classes in the village community center. He arranged for donated computers, created a curriculum, and taught basic computer skills, internet usage, and online job applications. He also connected trainees with employment opportunities. Within a year, 50 youth got jobs or started small businesses. Amit's initiative transformed unemployment into opportunity, bringing prosperity to his village.</p>
+<br>
+<hr>
+<br>
+<h3>Scenario: Traffic Accident / Road Safety</h3>
+<br>
+<p><strong>THEME:</strong> Civic Sense, Safety Awareness</p>
+<br>
+<p><strong>STORY:</strong></p>
+<p>Sneha noticed that a particular road intersection in her area had frequent accidents due to poor visibility and lack of traffic signals. She documented accident data, took photographs, and prepared a detailed report. She submitted it to traffic police and municipal corporation, followed up regularly, and mobilized residents to support the cause. She also organized road safety awareness campaigns in nearby schools. Her persistent efforts resulted in installation of traffic signals and better road markings. Accidents reduced by 70%. Sneha's civic responsibility made the area safer for everyone.</p>
+<br>
+<hr>
+<br>
+<h2>Tips for Writing TAT Stories</h2>
+<br>
+<h3>Structure (4 minutes):</h3>
+<li><strong>30 seconds:</strong> Understand the picture</li>
+<li><strong>3 minutes:</strong> Write the story (Past-Present-Future)</li>
+<li><strong>30 seconds:</strong> Review and ensure positive ending</li>
+<br>
+<h3>Key Elements:</h3>
+<p>1. <strong>Hero:</strong> Male, 22-24 years, relatable name</p>
+<p>2. <strong>Challenge:</strong> Clear problem or situation</p>
+<p>3. <strong>Action:</strong> Hero takes initiative, shows OLQs</p>
+<p>4. <strong>Outcome:</strong> Positive, constructive result</p>
+<p>5. <strong>Impact:</strong> Benefit to others/society</p>
+<br>
+<h3>OLQs to Display:</h3>
+<li><strong>Leadership:</strong> Taking charge, guiding others</li>
+<li><strong>Courage:</strong> Facing danger/difficulty</li>
+<li><strong>Determination:</strong> Not giving up</li>
+<li><strong>Helping Nature:</strong> Supporting others</li>
+<li><strong>Problem-Solving:</strong> Finding solutions</li>
+<li><strong>Responsibility:</strong> Taking ownership</li>
+<li><strong>Team Spirit:</strong> Working with others</li>
+<li><strong>Initiative:</strong> Starting action</li>
+<li><strong>Adaptability:</strong> Adjusting to situations</li>
+<li><strong>Communication:</strong> Expressing clearly</li>
+<br>
+<h3>Common Mistakes to Avoid:</h3>
+<p><span style="color: #dc3545;">❌</span> Negative endings (death, failure, sadness)</p>
+<p><span style="color: #dc3545;">❌</span> Romantic themes</p>
+<p><span style="color: #dc3545;">❌</span> Supernatural elements</p>
+<p><span style="color: #dc3545;">❌</span> Violence or revenge</p>
+<p><span style="color: #dc3545;">❌</span> Passive hero (things happening to him)</p>
+<p><span style="color: #dc3545;">❌</span> Unrealistic scenarios</p>
+<p><span style="color: #dc3545;">❌</span> Too much detail about one aspect</p>
+<p><span style="color: #dc3545;">❌</span> Incomplete stories</p>
+<br>
+<h3>What Assessors Look For:</h3>
+<p><span style="color: #28a745;">✅</span> Positive personality</p>
+<p><span style="color: #28a745;">✅</span> Action-oriented approach</p>
+<p><span style="color: #28a745;">✅</span> Social awareness</p>
+<p><span style="color: #28a745;">✅</span> Helping attitude</p>
+<p><span style="color: #28a745;">✅</span> Practical solutions</p>
+<p><span style="color: #28a745;">✅</span> Balanced thinking</p>
+<p><span style="color: #28a745;">✅</span> Optimistic outlook</p>
+<p><span style="color: #28a745;">✅</span> Leadership potential</p>
+<br>
+<hr>
+<br>
+<h2>Practice Strategy</h2>
+<br>
+<p>1. <strong>Daily Practice:</strong> Write 5-10 stories daily</p>
+<p>2. <strong>Time Management:</strong> Strictly follow 4-minute limit</p>
+<p>3. <strong>Variety:</strong> Cover different scenarios</p>
+<p>4. <strong>Review:</strong> Check if all OLQs are covered</p>
+<p>5. <strong>Feedback:</strong> Get stories reviewed by mentors</p>
+<p>6. <strong>Adaptation:</strong> Practice adapting stories to different pictures</p>
+<p>7. <strong>Handwriting:</strong> Ensure legible, fast writing</p>
+<p>8. <strong>Positive Mindset:</strong> Always think constructively</p>
+<br>
+<hr>
+<br>
+<p><strong>Remember:</strong> TAT reveals your personality, not your writing skills. Be genuine, positive, and action-oriented!</p>
+<br>
+<p><strong>All the Best for your SSB at Jalandhar on 9th December! 🎖️</strong></p>
+<br>
+<hr>
+<br>
+<br>
+<br>`;
+            return;
+            // Old code below (disabled)
+            /*
+            const content = document.getElementById('storiesGuide');
+            try {
+                const response = await fetch('TAT_Complete_Stories_Guide.md');
+                const text = await response.text();
+                content.innerHTML = convertMarkdownToHTML(text);
+            } catch (error) {
+                content.innerHTML = '<p class="danger-box">Could not load Stories Guide. Please ensure TAT_Complete_Stories_Guide.md is in the same folder.</p>';
+            }
+        }
+
+        // Load Quick Reference
+        */
+        }
+        
+        async function loadQuickGuide() {
+            const content = document.getElementById('quickGuide');
+            content.innerHTML = `<h1>Quick TAT Reference Guide - SSB Jalandhar</h1>
+<br>
+<h2>🎯 Your SSB Details</h2>
+<li><strong>Location:</strong> Jalandhar</li>
+<li><strong>Date:</strong> 9th December 2024</li>
+<li><strong>Test:</strong> TAT (Day 2 - Psychology Test)</li>
+<br>
+<hr>
+<br>
+<h2>⏱️ TAT Test Format</h2>
+<br>
+<li><strong>Total Pictures:</strong> 11-12 pictures</li>
+<li><strong>Time per Picture:</strong> </li>
+<p>  - 30 seconds to view</p>
+<p>  - 4 minutes to write story</p>
+<li><strong>Total Duration:</strong> ~50 minutes</li>
+<li><strong>What to Write:</strong> Story with Past-Present-Future</li>
+<br>
+<hr>
+<br>
+<h2>📝 Story Writing Formula</h2>
+<br>
+<h3>The Perfect Structure:</h3>
+<br>
+<p><strong>PAST (1-2 lines):</strong> What led to this situation?</p>
+<li>Example: "Rahul was preparing for NDA exam but was weak in mathematics..."</li>
+<br>
+<p><strong>PRESENT (2-3 lines):</strong> What is happening now? What action is the hero taking?</p>
+<li>Example: "He made a study plan, joined coaching, practiced daily for 3 hours..."</li>
+<br>
+<p><strong>FUTURE (1-2 lines):</strong> What will be the positive outcome?</p>
+<li>Example: "His hard work paid off and he cleared NDA with good marks, making his family proud."</li>
+<br>
+<hr>
+<br>
+<h2>🎭 Hero Characteristics</h2>
+<br>
+<p><span style="color: #28a745;">✅</span> <strong>DO:</strong></p>
+<li>Male character (if you're male)</li>
+<li>Age 22-24 years</li>
+<li>Relatable Indian name (Rahul, Arjun, Vikram, Aditya, Rohan, Karan)</li>
+<li>Action-oriented</li>
+<li>Takes initiative</li>
+<li>Helps others</li>
+<li>Solves problems</li>
+<li>Positive attitude</li>
+<br>
+<p><span style="color: #dc3545;">❌</span> <strong>DON'T:</strong></p>
+<li>Make hero passive (things happening TO him)</li>
+<li>Show hero as victim</li>
+<li>Make hero wait for others to help</li>
+<li>Show negative traits</li>
+<br>
+<hr>
+<br>
+<h2>🌟 Officer Like Qualities (OLQs) to Display</h2>
+<br>
+<h3>Must Show in Stories:</h3>
+<br>
+<p>1. <strong>Leadership</strong> - Taking charge, guiding others</p>
+<p>2. <strong>Courage</strong> - Facing difficult situations</p>
+<p>3. <strong>Determination</strong> - Not giving up despite obstacles</p>
+<p>4. <strong>Helping Nature</strong> - Supporting others in need</p>
+<p>5. <strong>Problem-Solving</strong> - Finding practical solutions</p>
+<p>6. <strong>Responsibility</strong> - Taking ownership of tasks</p>
+<p>7. <strong>Team Spirit</strong> - Working well with others</p>
+<p>8. <strong>Initiative</strong> - Starting action without being told</p>
+<p>9. <strong>Presence of Mind</strong> - Quick thinking in emergencies</p>
+<p>10. <strong>Social Awareness</strong> - Understanding community issues</p>
+<br>
+<h3>How to Show OLQs:</h3>
+<br>
+<p></td><td> OLQ </td><td> Action Words to Use </td><td></p>
+<p></td><td>-----</td><td>-------------------</td><td></p>
+<p></td><td> Leadership </td><td> "organized", "led", "coordinated", "guided", "motivated" </td><td></p>
+<p></td><td> Courage </td><td> "faced", "confronted", "didn't hesitate", "took risk" </td><td></p>
+<p></td><td> Determination </td><td> "practiced daily", "didn't give up", "worked hard" </td><td></p>
+<p></td><td> Helping </td><td> "helped", "supported", "assisted", "volunteered" </td><td></p>
+<p></td><td> Problem-Solving </td><td> "analyzed", "found solution", "innovated", "planned" </td><td></p>
+<br>
+<hr>
+<br>
+<h2>🚫 What to AVOID</h2>
+<br>
+<h3>Negative Themes:</h3>
+<p><span style="color: #dc3545;">❌</span> Death or dying</p>
+<p><span style="color: #dc3545;">❌</span> Suicide</p>
+<p><span style="color: #dc3545;">❌</span> Murder or violence</p>
+<p><span style="color: #dc3545;">❌</span> Revenge</p>
+<p><span style="color: #dc3545;">❌</span> Failure without recovery</p>
+<p><span style="color: #dc3545;">❌</span> Depression without solution</p>
+<p><span style="color: #dc3545;">❌</span> Family breaking apart</p>
+<br>
+<h3>Inappropriate Content:</h3>
+<p><span style="color: #dc3545;">❌</span> Romance or love stories</p>
+<p><span style="color: #dc3545;">❌</span> Sexual content</p>
+<p><span style="color: #dc3545;">❌</span> Supernatural/ghosts/magic</p>
+<p><span style="color: #dc3545;">❌</span> Unrealistic scenarios</p>
+<p><span style="color: #dc3545;">❌</span> Political controversies</p>
+<p><span style="color: #dc3545;">❌</span> Religious conflicts (unless showing harmony)</p>
+<br>
+<h3>Story Mistakes:</h3>
+<p><span style="color: #dc3545;">❌</span> Incomplete stories</p>
+<p><span style="color: #dc3545;">❌</span> Only describing the picture</p>
+<p><span style="color: #dc3545;">❌</span> Too much unnecessary detail</p>
+<p><span style="color: #dc3545;">❌</span> Negative ending</p>
+<p><span style="color: #dc3545;">❌</span> Hero doing nothing</p>
+<p><span style="color: #dc3545;">❌</span> Blaming others</p>
+<br>
+<hr>
+<br>
+<h2><span style="color: #28a745;">✅</span> What Assessors WANT to See</h2>
+<br>
+<h3>Positive Indicators:</h3>
+<p><span style="color: #28a745;">✅</span> Action-oriented hero</p>
+<p><span style="color: #28a745;">✅</span> Helping others</p>
+<p><span style="color: #28a745;">✅</span> Overcoming challenges</p>
+<p><span style="color: #28a745;">✅</span> Positive ending</p>
+<p><span style="color: #28a745;">✅</span> Social contribution</p>
+<p><span style="color: #28a745;">✅</span> Team work</p>
+<p><span style="color: #28a745;">✅</span> Practical solutions</p>
+<p><span style="color: #28a745;">✅</span> Optimistic outlook</p>
+<p><span style="color: #28a745;">✅</span> Taking responsibility</p>
+<p><span style="color: #28a745;">✅</span> Learning from failures</p>
+<br>
+<hr>
+<br>
+<h2>🎨 Common Picture Types & Quick Themes</h2>
+<br>
+<p></td><td> Picture Type </td><td> Theme </td><td> Quick Story Idea </td><td></p>
+<p></td><td>-------------</td><td>-------</td><td>-----------------</td><td></p>
+<p></td><td> Student studying </td><td> Academic determination </td><td> Struggling student works hard and succeeds </td><td></p>
+<p></td><td> Rope climbing </td><td> Physical courage </td><td> Overcoming fear through practice </td><td></p>
+<p></td><td> Group meeting </td><td> Leadership </td><td> Solving team conflict through coordination </td><td></p>
+<p></td><td> Helping elderly </td><td> Social responsibility </td><td> Assisting senior citizen in need </td><td></p>
+<p></td><td> Sports scene </td><td> Sportsmanship </td><td> Leading team to victory despite challenges </td><td></p>
+<p></td><td> Family scene </td><td> Maturity </td><td> Resolving family conflict wisely </td><td></p>
+<p></td><td> Bridge/obstacle </td><td> Problem-solving </td><td> Finding creative solution to cross </td><td></p>
+<p></td><td> Farming </td><td> Rural development </td><td> Introducing modern farming techniques </td><td></p>
+<p></td><td> Accident </td><td> Emergency response </td><td> Providing first aid and calling help </td><td></p>
+<p></td><td> Laboratory </td><td> Innovation </td><td> Developing solution through research </td><td></p>
+<p></td><td> Flood/disaster </td><td> Crisis management </td><td> Organizing relief and rescue </td><td></p>
+<p></td><td> Factory </td><td> Safety awareness </td><td> Preventing accident through vigilance </td><td></p>
+<p></td><td> Hospital </td><td> Healthcare dedication </td><td> Serving patients with commitment </td><td></p>
+<p></td><td> Classroom </td><td> Educational innovation </td><td> Making learning interesting </td><td></p>
+<p></td><td> Fire </td><td> Bravery </td><td> Rescuing people from danger </td><td></p>
+<br>
+<hr>
+<br>
+<h2>💡 Quick Story Templates</h2>
+<br>
+<h3>Template 1: Overcoming Personal Challenge</h3>
+<p>"[Name], a [age]-year-old [student/person], was facing difficulty in [challenge]. Instead of giving up, he [action taken]. He [specific steps]. After [time period] of dedicated effort, he [positive outcome]. His [OLQ] helped him succeed."</p>
+<br>
+<h3>Template 2: Helping Others</h3>
+<p>"[Name] noticed that [someone] was facing [problem]. While others [ignored/watched], [Name] immediately [action]. He [specific help provided]. His [OLQ] made a positive difference in [person's/community's] life."</p>
+<br>
+<h3>Template 3: Emergency Response</h3>
+<p>"When [emergency situation] occurred, [Name] was [present]. Instead of panicking, he immediately [action 1], [action 2], and [action 3]. His quick thinking and [OLQ] [positive outcome]."</p>
+<br>
+<h3>Template 4: Leadership</h3>
+<p>"[Name] was leading [team/group] when [challenge] arose. He [analyzed situation], [took decision], and [motivated team]. Through his [OLQ], the team [positive outcome]."</p>
+<br>
+<hr>
+<br>
+<h2>⚡ Time Management (4 minutes)</h2>
+<br>
+<p><strong>0:00-0:30</strong> - Read and understand the picture</p>
+<li>Identify: Who? What? Where?</li>
+<li>Think: What challenge/situation?</li>
+<li>Decide: What OLQ to show?</li>
+<br>
+<p><strong>0:30-3:30</strong> - Write the story (3 minutes)</p>
+<li>Past: 1-2 lines</li>
+<li>Present: 2-3 lines (main action)</li>
+<li>Future: 1-2 lines (positive outcome)</li>
+<br>
+<p><strong>3:30-4:00</strong> - Quick review (30 seconds)</p>
+<li>Check: Positive ending?</li>
+<li>Check: OLQs shown?</li>
+<li>Check: Complete story?</li>
+<br>
+<hr>
+<br>
+<h2>📊 Word Count Guide</h2>
+<br>
+<li><strong>Ideal Length:</strong> 60-80 words</li>
+<li><strong>Minimum:</strong> 50 words</li>
+<li><strong>Maximum:</strong> 100 words</li>
+<br>
+<p><strong>Don't worry about exact count - focus on complete story with positive ending!</strong></p>
+<br>
+<hr>
+<br>
+<h2>🎯 Day of Test - Remember</h2>
+<br>
+<h3>Before Test:</h3>
+<li>Stay calm and positive</li>
+<li>Don't discuss pictures with others</li>
+<li>Listen to instructions carefully</li>
+<li>Keep pen ready</li>
+<br>
+<h3>During Test:</h3>
+<li>Use full 30 seconds to think</li>
+<li>Write clearly and legibly</li>
+<li>Don't cross out too much</li>
+<li>Manage time for all pictures</li>
+<li>Stay positive throughout</li>
+<br>
+<h3>For Each Story:</h3>
+<p>1. Hero takes action (not passive)</p>
+<p>2. Shows at least 2 OLQs</p>
+<p>3. Helps others or solves problem</p>
+<p>4. Ends positively</p>
+<p>5. Is realistic and relatable</p>
+<br>
+<hr>
+<br>
+<h2>🔥 Power Words to Use</h2>
+<br>
+<h3>Action Words:</h3>
+<p>organized, led, motivated, helped, solved, created, developed, initiated, coordinated, managed, achieved, overcame, succeeded, contributed, improved, rescued, prevented, supported, guided, inspired</p>
+<br>
+<h3>Positive Outcome Words:</h3>
+<p>successful, appreciated, recognized, proud, satisfied, grateful, improved, benefited, saved, prevented, achieved, accomplished, transformed, inspired, earned respect</p>
+<br>
+<hr>
+<br>
+<h2>📚 Practice Checklist</h2>
+<br>
+<p>Before SSB, ensure you've practiced:</p>
+<li>☐ 50+ different stories</li>
+<li>☐ All common picture types</li>
+<li>☐ Writing within 4 minutes</li>
+<li>☐ Different OLQs in each story</li>
+<li>☐ Positive endings always</li>
+<li>☐ Clear, legible handwriting</li>
+<li>☐ Various scenarios (academic, sports, social, emergency, etc.)</li>
+<br>
+<hr>
+<br>
+<h2>🎖️ Final Tips</h2>
+<br>
+<p>1. <strong>Be Yourself:</strong> Don't try to be someone else</p>
+<p>2. <strong>Stay Positive:</strong> Every story must end well</p>
+<p>3. <strong>Take Action:</strong> Hero must DO something</p>
+<p>4. <strong>Help Others:</strong> Show social awareness</p>
+<p>5. <strong>Be Realistic:</strong> Avoid superhero scenarios</p>
+<p>6. <strong>Show Growth:</strong> Learning from challenges is good</p>
+<p>7. <strong>Time Management:</strong> Practice with timer</p>
+<p>8. <strong>Legible Writing:</strong> Assessors must be able to read</p>
+<p>9. <strong>Complete Stories:</strong> Past-Present-Future always</p>
+<p>10. <strong>Stay Calm:</strong> Don't panic if you see difficult picture</p>
+<br>
+<hr>
+<br>
+<h2>🌟 Remember</h2>
+<br>
+<p><strong>TAT doesn't test your writing skills - it reveals your personality!</strong></p>
+<br>
+<p>The assessors want to see:</p>
+<li>How you think</li>
+<li>How you react to situations</li>
+<li>What you value</li>
+<li>Your attitude towards life</li>
+<li>Your leadership potential</li>
+<br>
+<p><strong>Be genuine, be positive, be action-oriented!</strong></p>
+<br>
+<hr>
+<br>
+<h2>📞 Quick Revision - Night Before SSB</h2>
+<br>
+<p>1. Read 10 sample stories</p>
+<p>2. Practice 5 stories with timer</p>
+<p>3. Review OLQs list</p>
+<p>4. Remember: Positive endings always</p>
+<p>5. Sleep well - fresh mind is important!</p>
+<br>
+<hr>
+<br>
+<h2>🎯 On Test Day Morning</h2>
+<br>
+<p>1. Light breakfast</p>
+<p>2. Reach on time</p>
+<p>3. Stay calm and confident</p>
+<p>4. Positive self-talk</p>
+<p>5. Remember: You've prepared well!</p>
+<br>
+<hr>
+<br>
+<p><strong>ALL THE BEST FOR YOUR SSB! 🇮🇳</strong></p>
+<br>
+<p><strong>Jai Hind! 🎖️</strong></p>
+<br>
+<hr>
+<br>
+<p>*This guide is created specifically for your SSB preparation at Jalandhar on 9th December 2024.*</p>
+<br>
+<br>`;
+            return;
+            // Old code below (disabled)
+            /*
+            const content = document.getElementById('quickGuide');
+            try {
+                const response = await fetch('QUICK_TAT_REFERENCE.md');
+                const text = await response.text();
+                content.innerHTML = convertMarkdownToHTML(text);
+            } catch (error) {
+                content.innerHTML = '<p class="danger-box">Could not load Quick Reference. Please ensure QUICK_TAT_REFERENCE.md is in the same folder.</p>';
+            }
+        }
+
+        // Load Study Plan
+        */
+        }
+        
+        async function loadStudyGuide() {
+            const content = document.getElementById('studyGuide');
+            content.innerHTML = `<h1>🎖️ SSB TAT Preparation Package - Complete Guide</h1>
+<br>
+<p><strong>Prepared for:</strong> SSB Interview, Jalandhar  </p>
+<p><strong>Date:</strong> 9th December 2024  </p>
+<p><strong>Test:</strong> TAT (Thematic Apperception Test) - Day 2</p>
+<br>
+<hr>
+<br>
+<h2>📦 What's Included in This Package</h2>
+<br>
+<h3>1. <strong>TAT_Pictures_With_Stories.html</strong> ⭐</h3>
+<p><strong>Interactive Web Application</strong></p>
+<li>Displays all 74 TAT pictures from your PDF</li>
+<li>Editable fields for Theme, Story 1, and Story 2</li>
+<li>Auto-saves your work every 30 seconds</li>
+<li>Manual save button for each picture</li>
+<li>Export all stories to a document</li>
+<li>Beautiful, user-friendly interface</li>
+<br>
+<p><strong>How to Use:</strong></p>
+<li>Open the file in your browser (already opened)</li>
+<li>View each picture</li>
+<li>Write theme and 2 stories for each</li>
+<li>Click "Save" to save your work</li>
+<li>Click "Export All to Document" when done</li>
+<br>
+<hr>
+<br>
+<h3>2. <strong>TAT_Complete_Stories_Guide.md</strong> 📚</h3>
+<p><strong>Comprehensive Story Collection</strong></p>
+<li>20+ different picture types covered</li>
+<li>2 stories for each type (40+ total stories)</li>
+<li>All stories demonstrate Officer Like Qualities (OLQs)</li>
+<li>Covers: Academic, Sports, Social Service, Emergency, Leadership, etc.</li>
+<li>Each story follows Past-Present-Future structure</li>
+<li>Positive endings with clear OLQs</li>
+<br>
+<p><strong>How to Use:</strong></p>
+<li>Read all stories to understand patterns</li>
+<li>Identify picture types</li>
+<li>Adapt stories to match your pictures</li>
+<li>Practice writing similar stories</li>
+<br>
+<hr>
+<br>
+<h3>3. <strong>QUICK_TAT_REFERENCE.md</strong> ⚡</h3>
+<p><strong>Quick Reference Guide</strong></p>
+<li>TAT test format and timing</li>
+<li>Story writing formula</li>
+<li>OLQs to display</li>
+<li>What to avoid</li>
+<li>Common picture types</li>
+<li>Quick story templates</li>
+<li>Time management tips</li>
+<li>Power words to use</li>
+<li>Day-of-test checklist</li>
+<br>
+<p><strong>How to Use:</strong></p>
+<li>Read before practice sessions</li>
+<li>Review night before SSB</li>
+<li>Quick revision on test day morning</li>
+<li>Keep handy during practice</li>
+<br>
+<hr>
+<br>
+<h3>4. <strong>tat_images/</strong> 📁</h3>
+<p><strong>Folder with 74 TAT Pictures</strong></p>
+<li>All pictures extracted from "Decode TAT.pdf"</li>
+<li>Files: tat_picture_01.png to tat_picture_74.png</li>
+<li>High-quality images for practice</li>
+<br>
+<hr>
+<br>
+<h3>5. <strong>analyze_and_generate_stories.py</strong> 🤖</h3>
+<p><strong>AI Story Generator Script</strong> (Optional - Requires API Key)</p>
+<li>Can analyze pictures using AI</li>
+<li>Generates themes and stories automatically</li>
+<li>Requires Anthropic API key to run</li>
+<br>
+<hr>
+<br>
+<h2>🎯 Recommended Study Plan</h2>
+<br>
+<h3><strong>Week 1-2: Learning Phase</strong></h3>
+<p><strong>Day 1-3:</strong></p>
+<li>Read QUICK_TAT_REFERENCE.md completely</li>
+<li>Understand OLQs and story structure</li>
+<li>Read 10 sample stories from TAT_Complete_Stories_Guide.md</li>
+<br>
+<p><strong>Day 4-7:</strong></p>
+<li>Read all 40+ stories in TAT_Complete_Stories_Guide.md</li>
+<li>Identify patterns and OLQs in each story</li>
+<li>Note down different themes</li>
+<br>
+<p><strong>Day 8-14:</strong></p>
+<li>Open TAT_Pictures_With_Stories.html</li>
+<li>View pictures 1-20</li>
+<li>For each picture, identify the scenario</li>
+<li>Find similar story from the guide</li>
+<li>Adapt and write in the HTML form</li>
+<br>
+<hr>
+<br>
+<h3><strong>Week 3-4: Practice Phase</strong></h3>
+<p><strong>Daily Routine:</strong></p>
+<li>Morning: Write 5 stories with 4-minute timer</li>
+<li>Evening: Write 5 more stories</li>
+<li>Review and improve</li>
+<br>
+<p><strong>Practice Method:</strong></p>
+<p>1. Open a picture in HTML viewer</p>
+<p>2. Set timer for 30 seconds - just look</p>
+<p>3. Set timer for 4 minutes - write story</p>
+<p>4. Review: Is it positive? Shows OLQs? Complete?</p>
+<p>5. Save in HTML form</p>
+<p>6. Move to next picture</p>
+<br>
+<p><strong>Target:</strong> Complete all 74 pictures with 2 stories each</p>
+<br>
+<hr>
+<br>
+<h3><strong>Week 5: Revision Phase</strong></h3>
+<p><strong>Day 1-3:</strong></p>
+<li>Review all your written stories in HTML</li>
+<li>Identify weak areas</li>
+<li>Rewrite 10 best stories from memory</li>
+<br>
+<p><strong>Day 4-5:</strong></p>
+<li>Practice random pictures with timer</li>
+<li>Focus on time management</li>
+<li>Ensure legible handwriting</li>
+<br>
+<p><strong>Day 6:</strong></p>
+<li>Read QUICK_TAT_REFERENCE.md again</li>
+<li>Review OLQs list</li>
+<li>Practice 10 stories</li>
+<br>
+<p><strong>Day 7 (Day before SSB):</strong></p>
+<li>Light revision</li>
+<li>Read 10 sample stories</li>
+<li>Practice 5 stories with timer</li>
+<li>Early sleep</li>
+<br>
+<hr>
+<br>
+<h2>📊 Progress Tracking</h2>
+<br>
+<h3>Week 1-2: ☐ Learning</h3>
+<li>☐ Read all reference materials</li>
+<li>☐ Understood OLQs</li>
+<li>☐ Read 40+ sample stories</li>
+<li>☐ Identified picture types</li>
+<br>
+<h3>Week 3-4: ☐ Practice</h3>
+<li>☐ Practiced 50+ stories</li>
+<li>☐ Completed all 74 pictures</li>
+<li>☐ Writing within 4 minutes</li>
+<li>☐ Showing OLQs in stories</li>
+<br>
+<h3>Week 5: ☐ Revision</h3>
+<li>☐ Reviewed all stories</li>
+<li>☐ Improved weak areas</li>
+<li>☐ Confident with timing</li>
+<li>☐ Ready for SSB</li>
+<br>
+<hr>
+<br>
+<h2>🎯 Key Success Factors</h2>
+<br>
+<h3>1. <strong>Story Structure</strong> (Must Have)</h3>
+<p><span style="color: #28a745;">✅</span> Past - What led to situation</p>
+<p><span style="color: #28a745;">✅</span> Present - What hero is doing</p>
+<p><span style="color: #28a745;">✅</span> Future - Positive outcome</p>
+<br>
+<h3>2. <strong>Hero Characteristics</strong> (Must Have)</h3>
+<p><span style="color: #28a745;">✅</span> Male, 22-24 years (if you're male)</p>
+<p><span style="color: #28a745;">✅</span> Takes initiative</p>
+<p><span style="color: #28a745;">✅</span> Action-oriented</p>
+<p><span style="color: #28a745;">✅</span> Helps others</p>
+<p><span style="color: #28a745;">✅</span> Solves problems</p>
+<br>
+<h3>3. <strong>OLQs to Display</strong> (Show 2-3 per story)</h3>
+<p><span style="color: #28a745;">✅</span> Leadership</p>
+<p><span style="color: #28a745;">✅</span> Courage</p>
+<p><span style="color: #28a745;">✅</span> Determination</p>
+<p><span style="color: #28a745;">✅</span> Helping Nature</p>
+<p><span style="color: #28a745;">✅</span> Problem-Solving</p>
+<p><span style="color: #28a745;">✅</span> Responsibility</p>
+<p><span style="color: #28a745;">✅</span> Team Spirit</p>
+<p><span style="color: #28a745;">✅</span> Initiative</p>
+<br>
+<h3>4. <strong>Positive Ending</strong> (Mandatory)</h3>
+<p><span style="color: #28a745;">✅</span> Problem solved</p>
+<p><span style="color: #28a745;">✅</span> People helped</p>
+<p><span style="color: #28a745;">✅</span> Goal achieved</p>
+<p><span style="color: #28a745;">✅</span> Learning gained</p>
+<p><span style="color: #28a745;">✅</span> Positive impact</p>
+<br>
+<hr>
+<br>
+<h2><span style="color: #dc3545;">❌</span> Common Mistakes to Avoid</h2>
+<br>
+<p>1. <strong>Negative Endings</strong> - Never end with death, failure, sadness</p>
+<p>2. <strong>Passive Hero</strong> - Hero must take action, not wait</p>
+<p>3. <strong>Romance</strong> - Avoid love stories completely</p>
+<p>4. <strong>Violence</strong> - No revenge, murder, fighting</p>
+<p>5. <strong>Incomplete Stories</strong> - Always have Past-Present-Future</p>
+<p>6. <strong>Unrealistic</strong> - Avoid superhero scenarios</p>
+<p>7. <strong>Too Detailed</strong> - Keep it concise, 60-80 words</p>
+<p>8. <strong>Poor Time Management</strong> - Practice with timer</p>
+<br>
+<hr>
+<br>
+<h2>📱 Files Quick Access</h2>
+<br>
+<p></td><td> File Name </td><td> Purpose </td><td> When to Use </td><td></p>
+<p></td><td>-----------</td><td>---------</td><td>-------------</td><td></p>
+<p></td><td> TAT_Pictures_With_Stories.html </td><td> Write and save stories </td><td> Daily practice </td><td></p>
+<p></td><td> TAT_Complete_Stories_Guide.md </td><td> Learn story patterns </td><td> Study phase </td><td></p>
+<p></td><td> QUICK_TAT_REFERENCE.md </td><td> Quick tips and formulas </td><td> Before practice, revision </td><td></p>
+<p></td><td> tat_images/ </td><td> View pictures </td><td> Practice sessions </td><td></p>
+<br>
+<hr>
+<br>
+<h2>🎖️ Day of Test - Checklist</h2>
+<br>
+<h3>Morning:</h3>
+<li>☐ Light breakfast</li>
+<li>☐ Reach SSB center on time</li>
+<li>☐ Carry required documents</li>
+<li>☐ Stay calm and positive</li>
+<br>
+<h3>During TAT:</h3>
+<li>☐ Listen to instructions carefully</li>
+<li>☐ Use full 30 seconds to think</li>
+<li>☐ Write clearly and legibly</li>
+<li>☐ Manage time for all pictures</li>
+<li>☐ Ensure positive endings</li>
+<li>☐ Stay calm throughout</li>
+<br>
+<h3>For Each Story:</h3>
+<li>☐ Hero takes action</li>
+<li>☐ Shows 2-3 OLQs</li>
+<li>☐ Helps others or solves problem</li>
+<li>☐ Ends positively</li>
+<li>☐ Is realistic</li>
+<br>
+<hr>
+<br>
+<h2>💪 Motivation</h2>
+<br>
+<p><strong>Remember:</strong></p>
+<li>You have 74 pictures to practice with</li>
+<li>You have 40+ sample stories to learn from</li>
+<li>You have comprehensive guides</li>
+<li>You have time to prepare well</li>
+<br>
+<p><strong>TAT reveals your personality, not writing skills!</strong></p>
+<br>
+<p>Be:</p>
+<li><span style="color: #28a745;">✅</span> Genuine</li>
+<li><span style="color: #28a745;">✅</span> Positive</li>
+<li><span style="color: #28a745;">✅</span> Action-oriented</li>
+<li><span style="color: #28a745;">✅</span> Helpful</li>
+<li><span style="color: #28a745;">✅</span> Optimistic</li>
+<br>
+<hr>
+<br>
+<h2>🎯 Final Words</h2>
+<br>
+<p><strong>The assessors are looking for:</strong></p>
+<li>Future officers who take initiative</li>
+<li>Leaders who help others</li>
+<li>Problem-solvers who find solutions</li>
+<li>Positive personalities who inspire</li>
+<li>Responsible individuals who care</li>
+<br>
+<p><strong>Show them through your stories that you are that person!</strong></p>
+<br>
+<hr>
+<br>
+<h2>📞 Quick Help</h2>
+<br>
+<p><strong>If you need to:</strong></p>
+<li><strong>View pictures:</strong> Open TAT_Pictures_With_Stories.html</li>
+<li><strong>Learn story patterns:</strong> Read TAT_Complete_Stories_Guide.md</li>
+<li><strong>Quick revision:</strong> Read QUICK_TAT_REFERENCE.md</li>
+<li><strong>Practice writing:</strong> Use HTML form with timer</li>
+<li><strong>Export stories:</strong> Click "Export All to Document" in HTML</li>
+<br>
+<hr>
+<br>
+<h2>🌟 Your Preparation Journey</h2>
+<br>
+<p><code></code>\`</p>
+<p>Week 1-2: LEARN → Understand OLQs, Read samples</p>
+<p>Week 3-4: PRACTICE → Write 100+ stories</p>
+<p>Week 5: REVISE → Perfect your skills</p>
+<p>Dec 9: PERFORM → Show your best!</p>
+<p><code></code>\`</p>
+<br>
+<hr>
+<br>
+<p><strong>ALL THE BEST FOR YOUR SSB AT JALANDHAR! 🇮🇳</strong></p>
+<br>
+<p><strong>You've got this! Work hard, stay positive, and success will follow! 🎖️</strong></p>
+<br>
+<p><strong>JAI HIND! 🇮🇳</strong></p>
+<br>
+<hr>
+<br>
+<p>*Package created specifically for SSB TAT preparation - December 2024*</p>
+<br>
+<hr>
+<br>
+<h2>📧 Package Contents Summary</h2>
+<br>
+<p>1. <span style="color: #28a745;">✅</span> TAT_Pictures_With_Stories.html - Interactive practice tool</p>
+<p>2. <span style="color: #28a745;">✅</span> TAT_Complete_Stories_Guide.md - 40+ sample stories</p>
+<p>3. <span style="color: #28a745;">✅</span> QUICK_TAT_REFERENCE.md - Quick reference guide</p>
+<p>4. <span style="color: #28a745;">✅</span> README_TAT_PREPARATION.md - This file</p>
+<p>5. <span style="color: #28a745;">✅</span> tat_images/ - 74 TAT pictures</p>
+<p>6. <span style="color: #28a745;">✅</span> analyze_and_generate_stories.py - AI generator (optional)</p>
+<br>
+<p><strong>Everything you need for TAT preparation is ready! Start practicing today! 💪</strong></p>
+<br>
+<br>`;
+            return;
+            // Old code below (disabled)
+            /*
+            const content = document.getElementById('studyGuide');
+            try {
+                const response = await fetch('README_TAT_PREPARATION.md');
+                const text = await response.text();
+                content.innerHTML = convertMarkdownToHTML(text);
+            } catch (error) {
+                content.innerHTML = '<p class="danger-box">Could not load Study Plan. Please ensure README_TAT_PREPARATION.md is in the same folder.</p>';
+            }
+        }
+
+        // Simple Markdown to HTML converter
+        */
+        }
+        
+        function convertMarkdownToHTML(markdown) {
+            // Not needed anymore, content is embedded
+            /*
+            let html = markdown;
+
+            // Headers
+            html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+            html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+            html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+            html = html.replace(/^#### (.*$)/gim, '<h4>$1</h4>');
+
+            // Bold
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+            // Italic
+            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+            // Code
+            html = html.replace(/`(.*?)`/g, '<code>$1</code>');
+
+            // Horizontal rules
+            html = html.replace(/^---$/gim, '<hr>');
+
+            // Lists - unordered
+            html = html.replace(/^\- (.*$)/gim, '<li>$1</li>');
+            html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+
+            // Checkboxes
+            html = html.replace(/\[ \]/g, '☐');
+            html = html.replace(/\[x\]/g, '☑');
+            html = html.replace(/\[X\]/g, '☑');
+
+            // Emojis and special characters
+            html = html.replace(/✅/g, '<span style="color: #28a745;">✅</span>');
+            html = html.replace(/❌/g, '<span style="color: #dc3545;">❌</span>');
+            html = html.replace(/⭐/g, '<span style="color: #ffc107;">⭐</span>');
+
+            // Tables (basic support)
+            html = html.replace(/\|(.+)\|/g, function(match) {
+                const cells = match.split('|').filter(cell => cell.trim());
+                const cellTags = cells.map(cell => `<td>${cell.trim()}</td>`).join('');
+                return `<tr>${cellTags}</tr>`;
+            });
+
+            // Paragraphs
+            html = html.split('\n\n').map(para => {
+                if (!para.match(/^<[h|u|o|l|t|d]/)) {
+                    return `<p>${para}</p>`;
+                }
+                return para;
+            }).join('\n');
+
+            // Line breaks
+            html = html.replace(/\n/g, '<br>');
+
+            return html;
+        }
+
+        // Initialize on page load
+        window.onload = function() {
+            generatePracticeCards();
+            loadStoriesGuide();
+            loadQuickGuide();
+            loadStudyGuide();
+        };
+    </script>
+</body>
+</html>
+
