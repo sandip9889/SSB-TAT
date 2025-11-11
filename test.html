@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - TAT Images</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-image {
+            margin: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        img {
+            max-width: 400px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 TAT Images Test</h1>
+    <p>Testing if images load correctly from tat_images folder...</p>
+    
+    <div class="test-image">
+        <h3>Test Image 1:</h3>
+        <img src="tat_images/tat_picture_01.png" alt="TAT Picture 1" 
+             onload="document.getElementById('status1').className='status success'; document.getElementById('status1').innerHTML='✅ Image loaded successfully!'"
+             onerror="document.getElementById('status1').className='status error'; document.getElementById('status1').innerHTML='❌ Image failed to load. Path: tat_images/tat_picture_01.png'">
+        <div id="status1" class="status">⏳ Loading...</div>
+    </div>
+    
+    <div class="test-image">
+        <h3>Test Image 2:</h3>
+        <img src="tat_images/tat_picture_02.png" alt="TAT Picture 2"
+             onload="document.getElementById('status2').className='status success'; document.getElementById('status2').innerHTML='✅ Image loaded successfully!'"
+             onerror="document.getElementById('status2').className='status error'; document.getElementById('status2').innerHTML='❌ Image failed to load. Path: tat_images/tat_picture_02.png'">
+        <div id="status2" class="status">⏳ Loading...</div>
+    </div>
+    
+    <div class="test-image">
+        <h3>JavaScript Test:</h3>
+        <div id="jsTest" class="status">⏳ Testing JavaScript...</div>
+        <div id="containerTest"></div>
+    </div>
+    
+    <script>
+        // Test if JavaScript is working
+        document.getElementById('jsTest').className = 'status success';
+        document.getElementById('jsTest').innerHTML = '✅ JavaScript is working!';
+        
+        // Test dynamic content generation
+        window.onload = function() {
+            const container = document.getElementById('containerTest');
+            let html = '<h4>Dynamically Generated Content:</h4>';
+            for (let i = 1; i <= 5; i++) {
+                const picNum = i.toString().padStart(2, '0');
+                html += `<p>Picture ${i}: tat_images/tat_picture_${picNum}.png</p>`;
+            }
+            container.innerHTML = html;
+        };
+    </script>
+</body>
+</html>
+
