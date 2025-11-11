@@ -359,6 +359,7 @@
     <div class="tab-container">
         <div class="tabs">
             <button class="tab active" onclick="openTab(event, 'practice')">📝 Practice (74 Pictures)</button>
+            <button class="tab" onclick="openTab(event, 'suggestions')">💡 AI Suggestions</button>
             <button class="tab" onclick="openTab(event, 'stories')">📚 Complete Stories Guide</button>
             <button class="tab" onclick="openTab(event, 'quick')">⚡ Quick Reference</button>
             <button class="tab" onclick="openTab(event, 'study')">📖 Study Plan</button>
@@ -367,6 +368,11 @@
         <!-- Practice Tab -->
         <div id="practice" class="tab-content active">
             <div id="picturesContainer"></div>
+        </div>
+
+        <!-- AI Suggestions Tab -->
+        <div id="suggestions" class="tab-content">
+            <div class="guide-content" id="suggestionsGuide"></div>
         </div>
 
         <!-- Complete Stories Guide Tab -->
@@ -754,6 +760,117 @@
             setTimeout(() => {
                 msg.style.display = 'none';
             }, 2000);
+        }
+
+        // Load AI Suggestions Guide
+        async function loadSuggestionsGuide() {
+            const content = document.getElementById('suggestionsGuide');
+            content.innerHTML = `<h1>💡 AI Picture Analysis & Story Suggestions</h1>
+<br>
+<p><strong>How to Use:</strong> Read the picture analysis, suggested themes, and sample stories below. Use these as inspiration for your own stories!</p>
+<br>
+<hr>
+
+<h2>📸 Picture 1 - Boy with Violin</h2>
+<div style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #2196f3;">
+<h3>🎯 Suggested Themes:</h3>
+<li>Determination to learn music despite challenges</li>
+<li>Balancing studies and passion for music</li>
+<li>Overcoming fear of performance</li>
+<li>Dedication to master a skill</li>
+</div>
+
+<div style="background: #f3e5f5; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #9c27b0;">
+<h3>📖 Sample Story:</h3>
+<p><strong>Rahul, 16 years old</strong>, was a class 10 student who loved music. His school was organizing an inter-school music competition. Though Rahul was good at violin, he lacked confidence for stage performance. He decided to practice 2 hours daily after school. He sought guidance from his music teacher and performed in front of his family to overcome stage fear. On competition day, he performed brilliantly and won 2nd prize. His determination and systematic practice helped him succeed. <strong>OLQs: Determination, Self-confidence, Planning & Organizing</strong></p>
+</div>
+<hr>
+
+<h2>📸 Picture 2 - Rope Climbing Scene</h2>
+<div style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #2196f3;">
+<h3>🎯 Suggested Themes:</h3>
+<li>Physical fitness and endurance training</li>
+<li>Helping a teammate in difficulty</li>
+<li>Overcoming fear of heights</li>
+<li>Team coordination in adventure activity</li>
+</div>
+
+<div style="background: #f3e5f5; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #9c27b0;">
+<h3>📖 Sample Story:</h3>
+<p><strong>Vikram, 22 years old</strong>, was participating in NCC camp rope climbing activity. He noticed his friend Amit struggling midway and losing grip. Without hesitation, Vikram climbed up quickly, positioned himself below Amit, and guided him on proper hand placement. He motivated Amit with encouraging words. Together they completed the climb safely. The instructor praised Vikram's presence of mind and helping attitude. <strong>OLQs: Courage, Group Task, Effective Intelligence, Speed of Decision</strong></p>
+</div>
+<hr>
+
+<h2>📸 Picture 3 - Family Scene</h2>
+<div style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #2196f3;">
+<h3>🎯 Suggested Themes:</h3>
+<li>Resolving family conflict peacefully</li>
+<li>Taking responsibility during family crisis</li>
+<li>Supporting parents in difficult times</li>
+<li>Balancing family and personal goals</li>
+</div>
+
+<div style="background: #f3e5f5; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #9c27b0;">
+<h3>📖 Sample Story:</h3>
+<p><strong>Priya, 20 years old</strong>, noticed tension between her parents over financial issues. Her father lost his job and mother was worried about expenses. Priya decided to help. She took tuition classes for younger students to earn money. She also helped her father update his resume and search for jobs online. She managed household work to reduce mother's stress. Within 2 months, her father got a new job. The family appreciated Priya's maturity and support. <strong>OLQs: Sense of Responsibility, Social Adjustment, Cooperation</strong></p>
+</div>
+<hr>
+
+<h2>📸 Picture 4 - Medical Emergency</h2>
+<div style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #2196f3;">
+<h3>🎯 Suggested Themes:</h3>
+<li>Quick action during medical emergency</li>
+<li>Helping accident victim</li>
+<li>Organizing blood donation camp</li>
+<li>First aid knowledge saves life</li>
+</div>
+
+<div style="background: #f3e5f5; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #9c27b0;">
+<h3>📖 Sample Story:</h3>
+<p><strong>Arjun, 24 years old</strong>, witnessed a road accident while returning from college. A motorcyclist was injured and bleeding. Arjun immediately called ambulance (108) and police. He used his first aid training to stop bleeding with clean cloth. He kept the victim conscious by talking to him. He coordinated with police and informed victim's family from his phone. The victim was saved due to timely help. Police commended Arjun's presence of mind. <strong>OLQs: Courage, Effective Intelligence, Sense of Responsibility, Speed of Decision</strong></p>
+</div>
+<hr>
+
+<h2>📸 Picture 5 - Sports/Athletic Scene</h2>
+<div style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #2196f3;">
+<h3>🎯 Suggested Themes:</h3>
+<li>Winning despite injury</li>
+<li>Team spirit in sports</li>
+<li>Overcoming defeat positively</li>
+<li>Sportsmanship and fair play</li>
+</div>
+
+<div style="background: #f3e5f5; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #9c27b0;">
+<h3>📖 Sample Story:</h3>
+<p><strong>Karan, 21 years old</strong>, was captain of college football team in finals. During match, he got ankle injury but continued playing as team needed him. He reorganized team strategy, motivated players, and led from front despite pain. His team won 2-1. After match, he took medical treatment. Coach praised his dedication and leadership. Karan's never-give-up attitude inspired the entire team. <strong>OLQs: Determination, Stamina, Courage, Liveliness, Influence on Group</strong></p>
+</div>
+<hr>
+
+<h2>💡 Tips for Creating Your Own Stories:</h2>
+<div style="background: #fff3cd; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #ffc107;">
+<li><strong>Age:</strong> Keep protagonist 18-26 years old</li>
+<li><strong>Name:</strong> Use common Indian names</li>
+<li><strong>Problem:</strong> Identify clear challenge in picture</li>
+<li><strong>Action:</strong> Show positive, practical solution</li>
+<li><strong>Result:</strong> End with success and recognition</li>
+<li><strong>OLQs:</strong> Demonstrate 3-4 Officer Like Qualities</li>
+<li><strong>Length:</strong> 60-80 words, complete in 4 minutes</li>
+</div>
+
+<h2>🎯 Common OLQs to Demonstrate:</h2>
+<div style="background: #d4edda; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #28a745;">
+<li>Courage & Determination</li>
+<li>Effective Intelligence</li>
+<li>Sense of Responsibility</li>
+<li>Speed of Decision</li>
+<li>Self Confidence</li>
+<li>Group Task & Cooperation</li>
+<li>Social Adjustment</li>
+<li>Liveliness & Stamina</li>
+</div>
+
+<p><strong>Note:</strong> These are sample suggestions for first 5 pictures. Use similar approach for all 74 pictures. Analyze the picture, identify the situation, and create positive stories showing leadership and problem-solving!</p>
+<br>`;
         }
 
         // Load Stories Guide
@@ -1706,6 +1823,8 @@
             try {
                 generatePracticeCards();
                 console.log('Practice cards generated');
+                loadSuggestionsGuide();
+                console.log('Suggestions guide loaded');
                 loadStoriesGuide();
                 console.log('Stories guide loaded');
                 loadQuickGuide();
