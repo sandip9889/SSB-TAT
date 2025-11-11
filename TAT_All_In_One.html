@@ -552,7 +552,13 @@
         }
 
         // Export with pictures as HTML
-        function exportWithPictures() {
+        async function exportWithPictures() {
+            // Show loading message
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '⏳ Preparing export...';
+            btn.disabled = true;
+
             let html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -680,12 +686,21 @@
                         const story1 = (data.story1 || 'Not written yet').replace(/</g, '&lt;').replace(/>/g, '&gt;');
                         const story2 = (data.story2 || 'Not written yet').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
+                        // Get the image from the page
+                        const imgElement = document.querySelector(`img[alt="TAT Picture ${i}"]`);
+                        let imgSrc = '';
+                        if (imgElement && imgElement.src && !imgElement.src.includes('data:image/svg')) {
+                            imgSrc = imgElement.src;
+                        } else {
+                            imgSrc = `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><rect fill='%23f0f0f0' width='400' height='300'/><text x='50%25' y='50%25' text-anchor='middle' fill='%23999' font-size='24'>Picture ${i}</text></svg>`;
+                        }
+
                         html += `
         <div class="picture-card">
             <div class="picture-header">📸 PICTURE ${i}</div>
             <div class="content-grid">
                 <div class="picture-section">
-                    <img src="tat_images/tat_picture_${picNum}.png" alt="TAT Picture ${i}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22><rect fill=%22%23f0f0f0%22 width=%22400%22 height=%22300%22/><text x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2224%22>Picture ${i}</text></svg>'">
+                    <img src="${imgSrc}" alt="TAT Picture ${i}">
                 </div>
                 <div class="text-section">
                     <div class="theme-section">
@@ -726,6 +741,10 @@
             a.download = `My_TAT_Stories_with_Pictures_${date}.html`;
             a.click();
             URL.revokeObjectURL(url);
+
+            // Restore button
+            btn.innerHTML = originalText;
+            btn.disabled = false;
         }
 
         // Show success message
