@@ -1475,64 +1475,7 @@
 <br>`;
         }
 
-        function convertMarkdownToHTML(markdown) {
-            // Not needed anymore, content is embedded
-            /*
-            let html = markdown;
-
-            // Headers
-            html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
-            html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
-            html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
-            html = html.replace(/^#### (.*$)/gim, '<h4>$1</h4>');
-
-            // Bold
-            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-
-            // Italic
-            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-
-            // Code
-            html = html.replace(/`(.*?)`/g, '<code>$1</code>');
-
-            // Horizontal rules
-            html = html.replace(/^---$/gim, '<hr>');
-
-            // Lists - unordered
-            html = html.replace(/^\- (.*$)/gim, '<li>$1</li>');
-            html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
-
-            // Checkboxes
-            html = html.replace(/\[ \]/g, '☐');
-            html = html.replace(/\[x\]/g, '☑');
-            html = html.replace(/\[X\]/g, '☑');
-
-            // Emojis and special characters
-            html = html.replace(/✅/g, '<span style="color: #28a745;">✅</span>');
-            html = html.replace(/❌/g, '<span style="color: #dc3545;">❌</span>');
-            html = html.replace(/⭐/g, '<span style="color: #ffc107;">⭐</span>');
-
-            // Tables (basic support)
-            html = html.replace(/\|(.+)\|/g, function(match) {
-                const cells = match.split('|').filter(cell => cell.trim());
-                const cellTags = cells.map(cell => `<td>${cell.trim()}</td>`).join('');
-                return `<tr>${cellTags}</tr>`;
-            });
-
-            // Paragraphs
-            html = html.split('\n\n').map(para => {
-                if (!para.match(/^<[h|u|o|l|t|d]/)) {
-                    return `<p>${para}</p>`;
-                }
-                return para;
-            }).join('\n');
-
-            // Line breaks
-            html = html.replace(/\n/g, '<br>');
-
-            return html;
-            */
-        }
+        // convertMarkdownToHTML function removed - not needed anymore, content is embedded
 
         // Initialize on page load
         window.onload = function() {
