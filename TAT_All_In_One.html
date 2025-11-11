@@ -831,21 +831,9 @@
 <br>
 <br>
 <br>`;
-            return;
-            // Old code below (disabled)
-            /*
-            const content = document.getElementById('storiesGuide');
-            try {
-                const response = await fetch('TAT_Complete_Stories_Guide.md');
-                const text = await response.text();
-                content.innerHTML = convertMarkdownToHTML(text);
-            } catch (error) {
-                content.innerHTML = '<p class="danger-box">Could not load Stories Guide. Please ensure TAT_Complete_Stories_Guide.md is in the same folder.</p>';
-            }
         }
 
         // Load Quick Reference
-
         async function loadQuickGuide() {
             const content = document.getElementById('quickGuide');
             content.innerHTML = `<h1>Quick TAT Reference Guide - SSB Jalandhar</h1>
@@ -1148,21 +1136,9 @@
 <p>*This guide is created specifically for your SSB preparation at Jalandhar on 9th December 2024.*</p>
 <br>
 <br>`;
-            return;
-            // Old code below (disabled)
-            /*
-            const content = document.getElementById('quickGuide');
-            try {
-                const response = await fetch('QUICK_TAT_REFERENCE.md');
-                const text = await response.text();
-                content.innerHTML = convertMarkdownToHTML(text);
-            } catch (error) {
-                content.innerHTML = '<p class="danger-box">Could not load Quick Reference. Please ensure QUICK_TAT_REFERENCE.md is in the same folder.</p>';
-            }
         }
 
         // Load Study Plan
-
         async function loadStudyGuide() {
             const content = document.getElementById('studyGuide');
             content.innerHTML = `<h1>🎖️ SSB TAT Preparation Package - Complete Guide</h1>
@@ -1492,23 +1468,8 @@
 <p><strong>Everything you need for TAT preparation is ready! Start practicing today! 💪</strong></p>
 <br>
 <br>`;
-            return;
-            // Old code below (disabled)
-            /*
-            const content = document.getElementById('studyGuide');
-            try {
-                const response = await fetch('README_TAT_PREPARATION.md');
-                const text = await response.text();
-                content.innerHTML = convertMarkdownToHTML(text);
-            } catch (error) {
-                content.innerHTML = '<p class="danger-box">Could not load Study Plan. Please ensure README_TAT_PREPARATION.md is in the same folder.</p>';
-            }
         }
 
-        // Simple Markdown to HTML converter
-        */
-        }
-        
         function convertMarkdownToHTML(markdown) {
             // Not needed anymore, content is embedded
             /*
