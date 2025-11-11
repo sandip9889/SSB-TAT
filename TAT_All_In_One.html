@@ -389,8 +389,11 @@
     <div class="success-message" id="successMessage">✓ Saved successfully!</div>
 
     <script>
+        console.log('Script tag is loading...');
+
         // Tab switching function
         function openTab(evt, tabName) {
+            console.log('openTab called with:', tabName);
             const tabContents = document.getElementsByClassName('tab-content');
             for (let i = 0; i < tabContents.length; i++) {
                 tabContents[i].classList.remove('active');
