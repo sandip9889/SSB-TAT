@@ -385,7 +385,8 @@
         </div>
     </div>
 
-    <button class="export-btn" onclick="exportAllStories()">📥 Export All Stories</button>
+    <button class="export-btn" onclick="exportWithPictures()" style="right: 200px; background: #28a745;">� Export with Pictures</button>
+    <button class="export-btn" onclick="exportAllStories()">📥 Export as Text</button>
     <div class="success-message" id="successMessage">✓ Saved successfully!</div>
 
     <script>
@@ -496,30 +497,233 @@
 
         // Export all stories
         function exportAllStories() {
-            let content = 'SSB TAT PREPARATION - ALL STORIES\n';
-            content += 'SSB Jalandhar | 9th December 2024\n';
-            content += '='.repeat(60) + '\n\n';
+            let content = '';
+            content += '╔════════════════════════════════════════════════════════════════════════════╗\n';
+            content += '║                    SSB TAT PREPARATION - ALL STORIES                       ║\n';
+            content += '║                    SSB Jalandhar | 9th December 2024                       ║\n';
+            content += '╚════════════════════════════════════════════════════════════════════════════╝\n\n';
 
+            let pictureCount = 0;
             for (let i = 1; i <= 74; i++) {
                 const saved = localStorage.getItem(`tat_picture_${i}`);
                 if (saved) {
                     const data = JSON.parse(saved);
                     if (data.theme || data.story1 || data.story2) {
-                        content += `PICTURE ${i}\n`;
-                        content += '-'.repeat(60) + '\n';
-                        content += `THEME: ${data.theme || 'Not written yet'}\n\n`;
-                        content += `STORY 1:\n${data.story1 || 'Not written yet'}\n\n`;
-                        content += `STORY 2:\n${data.story2 || 'Not written yet'}\n\n`;
-                        content += '='.repeat(60) + '\n\n';
+                        pictureCount++;
+                        content += '\n';
+                        content += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n';
+                        content += `                              PICTURE ${i}\n`;
+                        content += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n';
+
+                        content += '📌 THEME:\n';
+                        content += '   ' + (data.theme || 'Not written yet') + '\n\n';
+
+                        content += '📖 STORY 1:\n';
+                        const story1Lines = (data.story1 || 'Not written yet').split('\n');
+                        story1Lines.forEach(line => {
+                            content += '   ' + line + '\n';
+                        });
+                        content += '\n';
+
+                        content += '📖 STORY 2:\n';
+                        const story2Lines = (data.story2 || 'Not written yet').split('\n');
+                        story2Lines.forEach(line => {
+                            content += '   ' + line + '\n';
+                        });
+                        content += '\n';
                     }
                 }
             }
+
+            content += '\n';
+            content += '╔════════════════════════════════════════════════════════════════════════════╗\n';
+            content += `║                    TOTAL PICTURES COMPLETED: ${pictureCount}/74                        ║\n`;
+            content += '║                         ALL THE BEST! JAI HIND! 🇮🇳                         ║\n';
+            content += '╚════════════════════════════════════════════════════════════════════════════╝\n';
 
             const blob = new Blob([content], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'TAT_All_Stories.txt';
+            const date = new Date().toISOString().split('T')[0];
+            a.download = `TAT_Stories_${date}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Export with pictures as HTML
+        function exportWithPictures() {
+            let html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My TAT Stories - SSB Preparation</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .header h1 { font-size: 3em; margin-bottom: 10px; }
+        .header p { font-size: 1.3em; margin: 5px 0; }
+        .picture-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            page-break-inside: avoid;
+        }
+        .picture-header {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            font-weight: bold;
+            text-align: center;
+        }
+        .content-grid {
+            display: grid;
+            grid-template-columns: 450px 1fr;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+        .picture-section img {
+            width: 100%;
+            border-radius: 10px;
+            border: 4px solid #667eea;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        .theme-section {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 6px solid #2196f3;
+        }
+        .theme-section h3 {
+            color: #1976d2;
+            font-size: 1.3em;
+            margin-bottom: 12px;
+        }
+        .theme-section p {
+            font-size: 1.15em;
+            line-height: 1.7;
+            color: #333;
+        }
+        .story-section {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 6px solid #9c27b0;
+        }
+        .story-section h3 {
+            color: #7b1fa2;
+            font-size: 1.3em;
+            margin-bottom: 12px;
+        }
+        .story-section p {
+            font-size: 1.05em;
+            line-height: 1.9;
+            white-space: pre-wrap;
+            color: #333;
+        }
+        .footer {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-top: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .footer h2 { font-size: 2em; margin-bottom: 15px; }
+        .footer p { font-size: 1.2em; margin: 8px 0; }
+        @media print {
+            body { background: white; }
+            .picture-card { page-break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎖️ My TAT Stories</h1>
+            <p><strong>SSB Jalandhar | 9th December 2024</strong></p>
+            <p>TAT - Day 2 Preparation</p>
+        </div>
+`;
+
+            let count = 0;
+            for (let i = 1; i <= 74; i++) {
+                const saved = localStorage.getItem(`tat_picture_${i}`);
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    if (data.theme || data.story1 || data.story2) {
+                        count++;
+                        const picNum = i.toString().padStart(2, '0');
+                        const theme = (data.theme || 'Not written yet').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        const story1 = (data.story1 || 'Not written yet').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        const story2 = (data.story2 || 'Not written yet').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+                        html += `
+        <div class="picture-card">
+            <div class="picture-header">📸 PICTURE ${i}</div>
+            <div class="content-grid">
+                <div class="picture-section">
+                    <img src="tat_images/tat_picture_${picNum}.png" alt="TAT Picture ${i}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22><rect fill=%22%23f0f0f0%22 width=%22400%22 height=%22300%22/><text x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2224%22>Picture ${i}</text></svg>'">
+                </div>
+                <div class="text-section">
+                    <div class="theme-section">
+                        <h3>📌 THEME:</h3>
+                        <p>${theme}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="story-section">
+                <h3>📖 STORY 1:</h3>
+                <p>${story1}</p>
+            </div>
+            <div class="story-section">
+                <h3>📖 STORY 2:</h3>
+                <p>${story2}</p>
+            </div>
+        </div>
+`;
+                    }
+                }
+            }
+
+            html += `
+        <div class="footer">
+            <h2>✅ Total Pictures Completed: ${count}/74</h2>
+            <p>All the Best for your SSB Interview!</p>
+            <p><strong>JAI HIND! 🇮🇳</strong></p>
+        </div>
+    </div>
+</body>
+</html>`;
+
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            const date = new Date().toISOString().split('T')[0];
+            a.download = `My_TAT_Stories_with_Pictures_${date}.html`;
             a.click();
             URL.revokeObjectURL(url);
         }
